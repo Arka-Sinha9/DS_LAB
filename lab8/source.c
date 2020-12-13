@@ -10,7 +10,7 @@ struct node *head1=NULL;
 struct node *head2=NULL;
 int length1=0;
 int length2=0;
-void ins1(int ele)
+void ins_rear1(int ele)
 {
     struct node *newnode, *temp;
     newnode=(struct node*)malloc(sizeof(struct node));
@@ -33,7 +33,7 @@ void ins1(int ele)
         length1++;
     }
 }
-void ins2(int ele)
+void ins_rear2(int ele)
 {
     struct node *newnode, *temp;
     newnode=(struct node*)malloc(sizeof(struct node));
@@ -54,6 +54,83 @@ void ins2(int ele)
         }
         temp->next=newnode;
         length2++;
+    }
+}
+void del_front1()
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    if(head1==NULL)
+    {
+        printf("List is empty!!\n");
+    }
+    else
+    {
+        temp=head1;
+        head1=temp->next;
+        printf("%d is removed front front!!\n",temp->data);
+        free(temp);
+    }
+}
+void del_front2()
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    if(head2==NULL)
+    {
+        printf("List is empty!!\n");
+    }
+    else
+    {
+        temp=head2;
+        head2=temp->next;
+        printf("%d is removed front front!!\n",temp->data);
+        free(temp);
+    }
+}
+void del_rear1()
+{
+    struct node *temp, *run;
+    temp=(struct node *)malloc(sizeof(struct node));
+    run=(struct node*)malloc(sizeof(struct node));
+    temp=head1->next;
+    if(run==NULL)
+    {
+        printf("List is empty!!\n");
+    }
+    else
+    {
+        while(temp->next!=NULL)
+        {
+            run=temp;
+            temp=temp->next;
+        }
+        printf("%d is deleted from rear\n",temp->data);
+        run->next=NULL;
+        free(temp);
+    }
+}
+void del_rear2()
+{
+    struct node *temp, *run;
+    temp=(struct node *)malloc(sizeof(struct node));
+    run=(struct node*)malloc(sizeof(struct node));
+    temp=head2->next;
+    run=head2;
+    if(run==NULL)
+    {
+        printf("List is empty!!\n");
+    }
+    else
+    {
+        while(temp->next!=NULL)
+        {
+            run=temp;
+            temp=temp->next;
+        }
+        printf("%d is deleted from rear\n",temp->data);
+        run->next=NULL;
+        free(temp);
     }
 }
 void del1(int ele)
@@ -128,6 +205,80 @@ void del2(int ele)
         printf("\nElement not found!!\n");
     }
 }
+void sort1(struct node *h)
+{
+    int i,j,a;
+
+    struct node *temp1;
+    struct node *temp2;
+
+    for(temp1=h;temp1!=NULL;temp1=temp1->next)
+      {
+        for(temp2=temp1->next;temp2!=NULL;temp2=temp2->next)
+          { 
+            if(temp2->data < temp1->data)
+              {
+                a = temp1->data;
+                temp1->data = temp2->data;
+                temp2->data = a;
+              }
+           }
+       }
+}
+void sort2(struct node *h)
+{
+    int i,j,a;
+
+    struct node *temp1;
+    struct node *temp2;
+
+    for(temp1=h;temp1!=NULL;temp1=temp1->next)
+      {
+        for(temp2=temp1->next;temp2!=NULL;temp2=temp2->next)
+          { 
+            if(temp2->data < temp1->data)
+              {
+                a = temp1->data;
+                temp1->data = temp2->data;
+                temp2->data = a;
+              }
+           }
+       }
+}
+void rev1(struct node *h)
+{
+    int i,j,a;
+
+    struct node *temp1;
+    struct node *temp2;
+
+    for(temp1=h;temp1!=NULL;temp1=temp1->next)
+    {
+        for(temp2=temp1->next;temp2!=NULL;temp2=temp2->next)
+        {
+            a = temp1->data;
+            temp1->data = temp2->data;
+            temp2->data = a;
+        }
+    }
+}
+void rev2(struct node *h)
+{
+    int i,j,a;
+
+    struct node *temp1;
+    struct node *temp2;
+
+    for(temp1=h;temp1!=NULL;temp1=temp1->next)
+    {
+        for(temp2=temp1->next;temp2!=NULL;temp2=temp2->next)
+        {
+            a = temp1->data;
+            temp1->data = temp2->data;
+            temp2->data = a;
+        }
+    }
+}
 void conc()
 {
     struct node *temp, *run;
@@ -195,9 +346,9 @@ void display2()
 int main()
 {
     int ch, item;
-    printf("Choose any option-\n");
+    printf("Choose any option-");
     do{
-        printf("1.Add to list 1\n2.Add to list 2\n3.Delete from list 1\n4.Delete from list 2\n5.Display list 1\n6.Display list 2\n7.Concatenate list 1 and list 2\n8.Exit\n");
+        printf("\n1.Insert at rear in list 1\n2.Insert at rear in list 2\n3.Delete random from list 1\n4.Delete random from list 2\n5.Remove from front in list 1\n6.Remove from front in list 2\n7.Remove from rear in list 1\n8.Remove from rear in list 2\n9.Display list 1\n10.Display list 2\n11.Sort list 1\n12.Sort list 2\n13.Reverse list 1.\n14.Reverse list 2\n15.Concatenate list 1 and list 2\n16.Exit\n");
         scanf("%d",&ch);
         switch(ch)
         {
@@ -205,13 +356,13 @@ int main()
             printf("\nEnter the number to be inserted: ");
             scanf("%d",&item);
             printf("\n");
-            ins1(item);
+            ins_rear1(item);
             break;
         case 2:
             printf("\nEnter the number to be inserted: ");
             scanf("%d",&item);
             printf("\n");
-            ins2(item);
+            ins_rear2(item);
             break;
         case 3:
             printf("\nEnter the number to be deleted: ");
@@ -226,19 +377,43 @@ int main()
             del2(item);
             break;
         case 5:
-            display1();
+            del_front1();
             break;
         case 6:
-            display2();
+            del_front2();
             break;
         case 7:
-            conc();
+            del_rear1();
             break;
         case 8:
+            del_rear2();
+            break;    
+        case 9:
+            display1();
+            break;
+        case 10:
+            display2();
+            break;
+        case 11:
+            sort1(head1);
+            break;
+        case 12:
+            sort2(head2);
+            break;
+        case 13:
+            rev1(head1);
+            break;
+        case 14:
+            rev2(head2);
+            break;
+        case 15:
+            conc();
+            break;
+        case 16:
             break;
         default:
             printf("\nEnter a valid choice!!\n");
         }
-    }while(ch!=8);
+    }while(ch!=16);
     return 0;
 }
